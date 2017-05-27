@@ -48,11 +48,12 @@
   color: white;
 }
 .coin-container p{
-  color: white;
+  color: #686576;
   margin-left: 8px;
 }
 
 /*/*/
+
 .circle {
   border-radius: 50%;
   border-style: solid;
@@ -65,14 +66,14 @@
 }
 
 .red {
-  background-color: red;
+  color: #f44336;
 }
 .b-red {
   border-color: red;
 }
 
 .green {
-  background-color: green;
+  color: #4caf50;
 }
 
 .white-f {

@@ -5,6 +5,7 @@ import logo from './logo.svg';
 
 import Cookies from 'js-cookie';
 import Spinner from './component/Spinner';
+import Helper from './class/Helper';
 import './css/App.css';
 
 class App extends Component {
@@ -56,6 +57,8 @@ class App extends Component {
     // bind this to functions
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.helper = new Helper();
   }
   componentDidMount() {
     // save so you can clear this interval later - load data every 15 seconds
@@ -82,7 +85,6 @@ class App extends Component {
           });
         }
         let filteredFeed = self.filterCoins(JSON.parse(this.responseText));
-        console.log(filteredFeed);
         self.setState({
           feed: filteredFeed
         });
@@ -123,20 +125,6 @@ class App extends Component {
   }
 
   /**
-   * check 1 hour change return green if its positive red otherwise
-   * @param  {[type]} feed    [new feed]
-   * @param  {[type]} oldFeed
-   * @return {[type]}  string
-   */
-  getColorChange(feed) {
-    if (feed.percent_change_1h > 0) {
-      return "green";
-    } else {
-      return "red";
-    }
-  }
-
-  /**
    * save filter preference in cookie
    * @param  {[type]} event [description]
    * @return {[type]}       [description]
@@ -162,22 +150,23 @@ class App extends Component {
   renderSpinners() {
     if (this.state.feed !== null) {
       let feed = this.state.feed;
-      let oldFeed = this.state.oldFeed;
-      let color = "green";
-      let getColorChange = this.getColorChange;
+      let getColor = this.helper.getColor;
+      let hour, day, day7;
       return feed.map(function(feed, i) {
+          // change color of percentage numbers
+          hour = getColor(feed.percent_change_1h);
+          day = getColor(feed.percent_change_24h);
+          day7 = getColor(feed.percent_change_7d);
 
-          // if its a positive change flash green otherwise red
-          color = getColorChange(feed);
-          let holdings = ( <p> hold: ${typeof Cookies.get(feed.id) === 'undefined' ? 0 : Cookies.get(feed.id) * feed.price_usd} </p>);
+          let holdings = ( <p> hold: <span>${typeof Cookies.get(feed.id) === 'undefined' ? 0 : Cookies.get(feed.id) * feed.price_usd}</span> </p>);
             return (
               <li key={i}>
                 <div className="coin-container">
                     <h1> {feed.name}</h1>
                     <h3> ${feed.price_usd}</h3>
-                    <p> 1h:<span id="hour"> {feed.percent_change_1h}</span></p>
-                    <p> 24h:<span id="day"> {feed.percent_change_24h}</span></p>
-                    <p> 7d:<span id="day7"> {feed.percent_change_7d}</span></p>
+                    <p> 1h:<span className={hour}> {feed.percent_change_1h}</span></p>
+                    <p> 24h:<span className={day}> {feed.percent_change_24h}</span></p>
+                    <p> 7d:<span className={day7}> {feed.percent_change_7d}</span></p>
                     {holdings}
                   </div>
                 </li>
