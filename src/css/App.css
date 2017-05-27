@@ -8,8 +8,8 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background-color: #3C3B45;
+  height: 80px;
   padding: 20px;
   color: white;
 }
@@ -27,6 +27,32 @@
   }
 }
 
+/*/*/
+
+.coin-container{
+  background-color: #25242B;
+
+  text-align: left;
+
+  padding: 8px 16px 8px 16px;
+  width: 200px;
+  height: 350x;
+
+  border-radius: 6px;
+}
+.coin-container h1{
+  color: #686576;
+}
+.coin-container h3{
+  text-align: center;
+  color: white;
+}
+.coin-container p{
+  color: white;
+  margin-left: 8px;
+}
+
+/*/*/
 .circle {
   border-radius: 50%;
   border-style: solid;

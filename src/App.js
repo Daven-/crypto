@@ -174,11 +174,10 @@ class App extends Component {
               <li key={i}>
                 <div className="coin-container">
                     <h1> {feed.name}</h1>
-                    <h3> {feed.price_usd}</h3>
+                    <h3> ${feed.price_usd}</h3>
                     <p> 1h:<span id="hour"> {feed.percent_change_1h}</span></p>
                     <p> 24h:<span id="day"> {feed.percent_change_24h}</span></p>
-                    <p> 7d:<span id="day7"> {feed.percent_change_7d}</span>
-                    </p>
+                    <p> 7d:<span id="day7"> {feed.percent_change_7d}</span></p>
                     {holdings}
                   </div>
                 </li>
