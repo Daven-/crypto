@@ -4,7 +4,7 @@ import React, {
 import logo from './logo.svg';
 
 import Cookies from 'js-cookie';
-import Spinner from './component/Spinner';
+import CoinContainer from './component/CoinContainer';
 import Helper from './class/Helper';
 import './css/App.css';
 
@@ -19,7 +19,7 @@ class App extends Component {
     };
     this.totalAmount = 0;
     // init load
-    this.loadFeed();
+    //this.loadFeed();
 
     // bind this to functions
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -136,29 +136,39 @@ class App extends Component {
       let getColor = this.helper.getColor;
       let dataChange = this.dataChange;
       let hour, day, day7;
-      return feed.map(function(feed, i) {
+
+      let coins = [];
+      let count = 0;
+
+      let coinContainers = feed.map(function(feed, i) {
           // change color of percentage numbers
-          hour = getColor(feed.percent_change_1h);
-          day = getColor(feed.percent_change_24h);
-          day7 = getColor(feed.percent_change_7d);
+          let classes = {
+            hour: getColor(feed.percent_change_1h),
+            day: getColor(feed.percent_change_24h),
+            day7: getColor(feed.percent_change_7d)
+          }
+          let percent = {
+            hour: feed.percent_change_1h,
+            day: feed.percent_change_24h,
+            day7: feed.percent_change_7d
+          }
 
           let holdAmount = typeof Cookies.get(feed.symbol) === 'undefined' ? '0' : Cookies.get(feed.symbol) * feed.price_usd
           let holdings = ( <p> hold: ${holdAmount} </p>);
-            return (
-              <div className="four columns">
-                <div key={i} className="coin-container">
-                    <h1>{feed.name}</h1>
-                    <h3> ${feed.price_usd}</h3>
-                    <p> 1h:<span className={hour}> {feed.percent_change_1h}</span></p>
-                    <p> 24h:<span className={day}> {feed.percent_change_24h}</span></p>
-                    <p> 7d:<span className={day7}> {feed.percent_change_7d}</span></p>
-                    {holdings}
-                </div>
-              </div>
-            );
-          });
+          return (
+                <CoinContainer key={i} name={feed.name} price_usd={feed.price_usd} classes={classes} percent={percent}>
+                  {holdings}
+                  </CoinContainer>
+          );
+      });
+      // but 3 coin containers in a row div
+      while (coinContainers.length > 0) {
+        let row = (<div key={Math.random()} className="row">{coinContainers.splice(0,3)}</div>);
+        coins.push(row);
       }
+      return coins;
     }
+  }
     render() {
       return (
         <div className="container">
@@ -195,7 +205,7 @@ class App extends Component {
             </div>
           </div>
 
-          <div className="row">{this.renderSpinners()}</div>
+          {this.renderSpinners()}
         </div>
       );
     }

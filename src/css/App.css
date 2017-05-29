@@ -34,9 +34,10 @@
 
   text-align: left;
 
-  padding: 4px 4px 24px 24px;
+  padding: 16px 16px 16px 16px;
+  margin-bottom: 24px;
   //width: 200px;
-  height: 350px;
+  height: 325px;
 
   border-radius: 6px;
 }
