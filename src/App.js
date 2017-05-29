@@ -78,9 +78,11 @@ class App extends Component {
    */
   handleSubmitCoinAmount(event) {
     event.preventDefault();
-    // save coins to filter in a cookie
-    Cookies.set(this.state.coinId.toUpperCase(), this.state.coinAmount, {
-      expires: 364
+    // save coin amount in local storage
+    localStorage.setItem(this.state.coinId.toUpperCase(), this.state.coinAmount);
+    this.setState({
+      coinId: "",
+      coinAmount: ""
     });
   }
 
@@ -118,7 +120,7 @@ class App extends Component {
             day7: feed.percent_change_7d
           }
 
-          let holdAmount = typeof Cookies.get(feed.symbol) === 'undefined' ? '0' : Cookies.get(feed.symbol) * feed.price_usd
+          let holdAmount = typeof localStorage[feed.symbol] === 'undefined' ? '0' : localStorage[feed.symbol] * feed.price_usd
           let holdings = ( <p> hold: ${holdAmount} </p>);
           return (
                 <CoinContainer key={i} name={feed.name} price_usd={feed.price_usd} classes={classes} percent={percent}>
@@ -143,12 +145,12 @@ class App extends Component {
             </div>
             <div className="twelve columns expand " ref={(value)=>this.expand = value}>
               <form onSubmit={this.handleSubmit} >
-                    <input type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="e.g btc,eth,xrp"/>
+                    <input type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="btc,eth,xrp"/>
                     <input className="button-primary" type="submit" value="filter" />
               </form>
               <form onSubmit={this.handleSubmitCoinAmount} >
-                  <input type="text" name="coinId" onChange={this.handleInputChange} placeholder="Coin symbol e.g btc"/>
-                  <input type="text" name="coinAmount" onChange={this.handleInputChange} placeholder="Holding amount"/>
+                  <input type="text" name="coinId" value={this.state.coinId} onChange={this.handleInputChange} placeholder="Coin symbol e.g btc"/>
+                  <input type="text" name="coinAmount" value={this.state.coinAmount} onChange={this.handleInputChange} placeholder="Holding amount e.g 1000"/>
                   <input className="button-primary" type="submit" value="Add" />
               </form>
             </div>
