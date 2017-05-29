@@ -26,7 +26,9 @@
     transform: rotate(360deg);
   }
 }
-
+input[type]{
+  margin-right: 4px;
+}
 /*/*/
 
 .coin-container{
@@ -55,23 +57,21 @@
 
 /*/*/
 
-.add-btn{
-  float: right;
+.expand-btn-container{
+  text-align: center;
 }
-
-.add-btn button{
+#expand-btn{
   color: white;
-  background-color: #686576;
-  border: none;
-  padding: 0;
-  padding-left: 16px;
-  padding-right: 16px;
+  font-size: 1.5rem;
+  align-items:center;
+
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
-.add-btn button:hover{
-
+.expand{
+  display: none;
 }
-
 /*/*/
 
 .circle {

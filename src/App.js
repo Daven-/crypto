@@ -25,6 +25,7 @@ class App extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitCoinAmount = this.handleSubmitCoinAmount.bind(this);
+    this.handleExpand = this.handleExpand.bind(this);
 
     this.helper = new Helper();
   }
@@ -93,6 +94,10 @@ class App extends Component {
     })
   }
 
+  handleExpand(){
+    this.expand.classList.toggle('expand');
+  }
+
 
   renderSpinners() {
     if (this.state.feed !== null) {
@@ -133,34 +138,18 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="twelve columns"><h1>Total Amount Holding: {this.totalAmount}</h1></div>
-          </div>
-          <div className="row">
-            <div className="five columns">
-              <form onSubmit={this.handleSubmit} >
-                <div className="row">
-                  <div className="seven columns">
-                    <input type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="five columns">
-                    <input className="button-primary" type="submit" value="filter" />
-                  </div>
-                </div>
-              </form>
+            <div className="twelve columns expand-btn-container">
+              <button id="expand-btn" onClick={this.handleExpand}>&#43;</button>
             </div>
-            <div className="seven columns">
+            <div className="twelve columns expand " ref={(value)=>this.expand = value}>
+              <form onSubmit={this.handleSubmit} >
+                    <input type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="e.g btc,eth,xrp"/>
+                    <input className="button-primary" type="submit" value="filter" />
+              </form>
               <form onSubmit={this.handleSubmitCoinAmount} >
-                <div className="row">
-                  <div className="five columns">
-                    <input type="text" name="coinId" onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="five columns">
-                  <input type="text" name="coinAmount" onChange={this.handleInputChange}/>
-                  </div>
-                  <div className="two columns">
-                    <input className="button-primary" type="submit" value="Add" />
-                  </div>
-                </div>
+                  <input type="text" name="coinId" onChange={this.handleInputChange} placeholder="Coin symbol e.g btc"/>
+                  <input type="text" name="coinAmount" onChange={this.handleInputChange} placeholder="Holding amount"/>
+                  <input className="button-primary" type="submit" value="Add" />
               </form>
             </div>
           </div>
