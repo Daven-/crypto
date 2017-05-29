@@ -8,61 +8,29 @@ import Spinner from './component/Spinner';
 import Helper from './class/Helper';
 import './css/App.css';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
     // state {if the value is not used in render it should not be in state}
     this.state = {
-      feed: [
-        {
-          dh_volume_usd: "1366760000.0",
-          available_supply:"91975978.0",
-          id: "ethereum",
-          last_updated: "1495906162",
-          market_cap_usd: "14658487616.0",
-          name: "Ethereum",
-          percent_change_1h: "-1.39",
-          percent_change_7d: "23.23",
-          percent_change_24h: "-9.26",
-          price_btc: "0.0761757",
-          price_usd: "159.373",
-          rank: "2",
-          symbol: "ETH",
-          total_supply: "91975978.0"
-        },
-        {
-          dh_volume_usd: "280233000.0",
-          available_supply:"38249335400.0",
-          id: "ripple",
-          last_updated: "1495906142",
-          market_cap_usd: "8192892895.0",
-          name: "Ripple",
-          percent_change_1h: "3.24",
-          percent_change_7d: "-39.22",
-          percent_change_24h: "-27.77",
-          price_btc: "0.00010238",
-          price_usd: "0.214197",
-          rank: "3",
-          symbol: "XRP",
-          total_supply: "99994682853.0"
-        }
-      ],
-      oldFeed: null,
+      feed: null,
       filteredCoins: typeof Cookies.get('filteredCoins') === 'undefined' ? '' : Cookies.get('filteredCoins')
     };
-
+    this.totalAmount = 0;
     // init load
-    //this.loadFeed();
+    this.loadFeed();
 
     // bind this to functions
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitCoinAmount = this.handleSubmitCoinAmount.bind(this);
 
     this.helper = new Helper();
   }
   componentDidMount() {
     // save so you can clear this interval later - load data every 15 seconds
-    //this.streamId = setInterval(this.loadFeed.bind(this), 15000);
+    this.streamId = setInterval(this.loadFeed.bind(this), 15000);
   }
 
   componentWillUnmount() {
@@ -136,13 +104,28 @@ class App extends Component {
       expires: 364
     });
     this.loadFeed();
+  }
 
+  /**
+   * save coin amount in cookie
+   * @param  {[type]} event [description]
+   * @return {[type]}       [description]
+   */
+  handleSubmitCoinAmount(event) {
+    event.preventDefault();
+    // save coins to filter in a cookie
+    Cookies.set(this.state.coinId.toUpperCase(), this.state.coinAmount, {
+      expires: 364
+    });
   }
 
 
   handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
     this.setState({
-      filteredCoins: event.target.value
+      [name]: value
     })
   }
 
@@ -151,6 +134,7 @@ class App extends Component {
     if (this.state.feed !== null) {
       let feed = this.state.feed;
       let getColor = this.helper.getColor;
+      let dataChange = this.dataChange;
       let hour, day, day7;
       return feed.map(function(feed, i) {
           // change color of percentage numbers
@@ -158,33 +142,60 @@ class App extends Component {
           day = getColor(feed.percent_change_24h);
           day7 = getColor(feed.percent_change_7d);
 
-          let holdings = ( <p> hold: <span>${typeof Cookies.get(feed.id) === 'undefined' ? 0 : Cookies.get(feed.id) * feed.price_usd}</span> </p>);
+          let holdAmount = typeof Cookies.get(feed.symbol) === 'undefined' ? '0' : Cookies.get(feed.symbol) * feed.price_usd
+          let holdings = ( <p> hold: ${holdAmount} </p>);
             return (
-              <li key={i}>
-                <div className="coin-container">
-                    <h1> {feed.name}</h1>
+              <div className="four columns">
+                <div key={i} className="coin-container">
+                    <h1>{feed.name}</h1>
                     <h3> ${feed.price_usd}</h3>
                     <p> 1h:<span className={hour}> {feed.percent_change_1h}</span></p>
                     <p> 24h:<span className={day}> {feed.percent_change_24h}</span></p>
                     <p> 7d:<span className={day7}> {feed.percent_change_7d}</span></p>
                     {holdings}
-                  </div>
-                </li>
+                </div>
+              </div>
             );
           });
       }
     }
     render() {
       return (
-        <div className="App">
-          <div className="App-header" >
-            <h2> Welcome to React </h2>
-            <form onSubmit={this.handleSubmit} >
-              <input type="text" onChange={this.handleInputChange} value={this.state.filteredCoins}/>
-              <input type="submit" value="Submit" />
-            </form>
+        <div className="container">
+          <div className="row">
+            <div className="twelve columns"><h1>Total Amount Holding: {this.totalAmount}</h1></div>
           </div>
-        <ul> {this.renderSpinners()} </ul>
+          <div className="row">
+            <div className="five columns">
+              <form onSubmit={this.handleSubmit} >
+                <div className="row">
+                  <div className="seven columns">
+                    <input type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange}/>
+                  </div>
+                  <div className="five columns">
+                    <input className="button-primary" type="submit" value="filter" />
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div className="seven columns">
+              <form onSubmit={this.handleSubmitCoinAmount} >
+                <div className="row">
+                  <div className="five columns">
+                    <input type="text" name="coinId" onChange={this.handleInputChange}/>
+                  </div>
+                  <div className="five columns">
+                  <input type="text" name="coinAmount" onChange={this.handleInputChange}/>
+                  </div>
+                  <div className="two columns">
+                    <input className="button-primary" type="submit" value="Add" />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div className="row">{this.renderSpinners()}</div>
         </div>
       );
     }

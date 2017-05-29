@@ -34,9 +34,9 @@
 
   text-align: left;
 
-  padding: 8px 16px 8px 16px;
-  width: 200px;
-  height: 350x;
+  padding: 4px 4px 24px 24px;
+  //width: 200px;
+  height: 350px;
 
   border-radius: 6px;
 }
@@ -50,6 +50,25 @@
 .coin-container p{
   color: #686576;
   margin-left: 8px;
+}
+
+/*/*/
+
+.add-btn{
+  float: right;
+}
+
+.add-btn button{
+  color: white;
+  background-color: #686576;
+  border: none;
+  padding: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.add-btn button:hover{
+
 }
 
 /*/*/
