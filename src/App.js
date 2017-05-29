@@ -47,49 +47,13 @@ class App extends Component {
     let self = this;
     xhttp.onreadystatechange = function() {
       if (this.readyState === 4 && this.status === 200) {
-        if (self.state.feed !== null) {
-          self.setState({
-            oldFeed: self.state.feed
-          });
-        }
-        let filteredFeed = self.filterCoins(JSON.parse(this.responseText));
         self.setState({
-          feed: filteredFeed
+          feed: self.helper.filterCoins(JSON.parse(this.responseText))
         });
       }
     };
     xhttp.open("GET", "https://api.coinmarketcap.com/v1/ticker/", true);
     xhttp.send()
-  }
-
-  /**
-   * returned filtered coin data - if there is no prefrence return top 10 coins
-   * @param  {[type]} coins         [all coins]
-   * @param  {[type]} filteredCoins [coins to get]
-   * @return {[type]}               [description]
-   */
-  filterCoins(coins) {
-    let filteredCoins = Cookies.get('filteredCoins');
-    if (typeof filteredCoins === 'undefined' || filteredCoins.replace(' ', '') === "") {
-      return coins.filter(function(coin) {
-        for (var i = 0; i < 9; i++) {
-          if (coin.rank == i + 1) {
-            return 1;
-          }
-        }
-        return 0;
-      });
-    } else {
-      filteredCoins = filteredCoins.replace(' ', '').split(',');
-      return coins.filter(function(coin) {
-        for (var i = 0; i < filteredCoins.length; i++) {
-          if (filteredCoins[i].toUpperCase() === coin.symbol) {
-            return 1;
-          }
-        }
-        return 0;
-      });
-    }
   }
 
   /**
@@ -134,11 +98,7 @@ class App extends Component {
     if (this.state.feed !== null) {
       let feed = this.state.feed;
       let getColor = this.helper.getColor;
-      let dataChange = this.dataChange;
-      let hour, day, day7;
-
       let coins = [];
-      let count = 0;
 
       let coinContainers = feed.map(function(feed, i) {
           // change color of percentage numbers
@@ -158,7 +118,7 @@ class App extends Component {
           return (
                 <CoinContainer key={i} name={feed.name} price_usd={feed.price_usd} classes={classes} percent={percent}>
                   {holdings}
-                  </CoinContainer>
+                </CoinContainer>
           );
       });
       // but 3 coin containers in a row div
