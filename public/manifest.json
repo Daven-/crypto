@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Crypto",
+  "name": "Website showing data from coinmarketcap's api",
   "icons": [
     {
       "src": "favicon.ico",
