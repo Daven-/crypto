@@ -19,7 +19,7 @@ class App extends Component {
     };
     this.totalAmount = 0;
     // init load
-    //this.loadFeed();
+    this.loadFeed();
 
     // bind this to functions
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -127,8 +127,15 @@ class App extends Component {
 
           let holdAmount = typeof localStorage[feed.symbol] === 'undefined' ? '0' : localStorage[feed.symbol] * feed.price_usd
           let holdings = ( <p> hold: ${holdAmount} </p>);
+          let name = '';
+          // short names only
+          if(feed.name.length>9){
+            name = feed.symbol;
+          }else{
+            name = feed.name;
+          }
           return (
-                <CoinContainer key={i} name={feed.name} price_usd={feed.price_usd} classes={classes} percent={percent}>
+                <CoinContainer key={i} name={name} price_usd={feed.price_usd} classes={classes} percent={percent}>
                   {holdings}
                 </CoinContainer>
           );
