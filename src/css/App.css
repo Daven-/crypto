@@ -29,6 +29,9 @@
 input[type]{
   margin-right: 4px;
 }
+.button-primary:disabled{
+  background-color: #25242B !important;
+}
 /*/*/
 
 .coin-container{
@@ -39,7 +42,7 @@ input[type]{
   padding: 16px 16px 16px 16px;
   margin-bottom: 24px;
   //width: 200px;
-  height: 325px;
+  height: 350px;
 
   border-radius: 6px;
 }
@@ -52,6 +55,8 @@ input[type]{
 }
 .coin-container p{
   color: #686576;
+  font-size: 1.7rem;
+
   margin-left: 8px;
 }
 
@@ -74,16 +79,6 @@ input[type]{
 }
 /*/*/
 
-.circle {
-  border-radius: 50%;
-  border-style: solid;
-}
-
-.inner-spinner {
-  border-radius: 50%;
-  width: 270px;
-  height: 270px;
-}
 
 .red {
   color: #f44336;
@@ -98,21 +93,4 @@ input[type]{
 
 .white-f {
   color: white;
-}
-
-.center {
-  text-align: center;
-}
-
-.circle-h {
-  padding-top: 32px;
-}
-
-ul{
-  list-style: none;
-
-}
-li{
-  display: inline-block;
-  margin-right: 16px;
 }
