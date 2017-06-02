@@ -157,10 +157,12 @@ class App extends Component {
             </div>
             <div className="twelve columns expand " ref={(value)=>this.expand = value}>
               <form onSubmit={this.handleSubmit} >
-                    <input type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="btc,eth,xrp" required/>
-                    <input className="button-primary" type="submit" value="filter" ref={(value) => this.filterSbmt = value} />
+                  <label for="filter-coins">Comma sperated list of coin ids</label>
+                  <input id="filter-coins" type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="btc,eth,xrp" required/>
+                  <input className="button-primary" type="submit" value="filter" ref={(value) => this.filterSbmt = value} />
               </form>
               <form onSubmit={this.handleSubmitCoinAmount} >
+                  <label>Hold amount should be coin amounts not dollar amount you hold</label>
                   <input type="text" name="coinId" value={this.state.coinId} onChange={this.handleInputChange} placeholder="Coin symbol e.g btc" required />
                   <input type="text" name="coinAmount" value={this.state.coinAmount} onChange={this.handleInputChange} placeholder="Holding amount e.g 1000" required />
                   <input className="button-primary" type="submit" value="Add" ref={(value) => this.amountSbmt = value} />
