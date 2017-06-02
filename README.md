@@ -1,3 +1,11 @@
+## The project is hosted here: http://cryptoc.herokuapp.com/
+
+Any PR's are welcome provided they don't completely change the design or add huge complexity.<br>
+This is meant to be a simple dashboard website to keep track of cryptocurrencies you currently have or
+are interested in.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
