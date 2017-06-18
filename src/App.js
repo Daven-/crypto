@@ -52,6 +52,7 @@ class App extends Component {
           feed: self.helper.filterCoins(JSON.parse(this.responseText))
         });
         self.filterSbmt.disabled = false;
+        document.getElementById('loading-gif').style.visibility = 'hidden';
       }
 
     };
@@ -169,7 +170,7 @@ class App extends Component {
               </form>
             </div>
           </div>
-
+          <img id="loading-gif" style={{display: 'block',margin: "0 auto"}} src="./loading.gif "></img>
           {this.renderSpinners()}
         </div>
       );
