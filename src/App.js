@@ -111,6 +111,7 @@ class App extends Component {
     if (this.state.feed !== null) {
       let feed = this.state.feed;
       let getColor = this.helper.getColor;
+      let formatNumber = this.helper.formatNumber;
       let coins = [];
 
       let coinContainers = feed.map(function(feed, i) {
@@ -126,8 +127,8 @@ class App extends Component {
             day7: feed.percent_change_7d
           }
 
-          let holdAmount = typeof localStorage[feed.symbol] === 'undefined' ? '0' : localStorage[feed.symbol] * feed.price_usd
-          let holdings = ( <p> hold: ${holdAmount} </p>);
+          let holdAmount = typeof localStorage[feed.symbol] === 'undefined' ? 0 : localStorage[feed.symbol] * feed.price_usd;
+          let holdings = ( <p> hold: {formatNumber(holdAmount)} </p>);
           let name = '';
           // short names only
           if(feed.name.length>9){
