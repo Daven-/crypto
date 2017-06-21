@@ -6,6 +6,7 @@ export default class Helper {
   constructor() {
 
   }
+
   /**
    * get color based on a number > 0, green > red
    * @param  {[type]} feed    [new feed]
@@ -48,5 +49,24 @@ export default class Helper {
         return 0;
       });
     }
+  }
+
+  /**
+   * Format numbers for better readability
+   * @param  {[type]} num
+   * @return {[type]} string
+   */
+  formatNumber(num) {
+    // Ensure value is a number first
+    num = num * 1;
+
+    // Source: https://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript#149099
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    });
+
+    return formatter.format(num);
   }
 }
