@@ -63,7 +63,6 @@ input[type]{
 
   margin-left: 8px;
 }
-
 /*/*/
 
 .expand-btn-container{
@@ -83,6 +82,13 @@ input[type]{
 }
 /*/*/
 
+#coin-total {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-top: 24px;
+}
+/*/*/
 
 .red {
   color: #f44336;

@@ -113,6 +113,7 @@ class App extends Component {
       let getColor = this.helper.getColor;
       let formatNumber = this.helper.formatNumber;
       let coins = [];
+      let coinTotal = 0;
 
       let coinContainers = feed.map(function(feed, i) {
           // change color of percentage numbers
@@ -129,6 +130,7 @@ class App extends Component {
 
           let holdAmount = typeof localStorage[feed.symbol] === 'undefined' ? 0 : localStorage[feed.symbol] * feed.price_usd;
           let holdings = ( <p> hold: {formatNumber(holdAmount)} </p>);
+          coinTotal += holdAmount;
           let name = '';
           // short names only
           if(feed.name.length>9){
@@ -147,6 +149,11 @@ class App extends Component {
         let row = (<div key={Math.random()} className="row">{coinContainers.splice(0,3)}</div>);
         coins.push(row);
       }
+      // Only display the total coin value if "hold" values have been entered
+      if (coinTotal > 0) {
+        document.getElementById('coin-total').textContent = 'Total: ' + formatNumber(coinTotal);
+      }
+
       return coins;
     }
   }
@@ -154,7 +161,10 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="twelve columns expand-btn-container">
+            <div className="nine columns">
+              <div id="coin-total"></div>
+            </div>
+            <div className="three columns expand-btn-container">
               <button id="expand-btn" onClick={this.handleExpand}>&#43;</button>
             </div>
             <div className="twelve columns expand " ref={(value)=>this.expand = value}>
