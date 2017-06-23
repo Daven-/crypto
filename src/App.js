@@ -161,10 +161,10 @@ class App extends Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="six columns">
+            <div className="nine columns">
               <div id="coin-total"></div>
             </div>
-            <div className="six columns expand-btn-container">
+            <div className="three columns expand-btn-container">
               <button id="expand-btn" onClick={this.handleExpand}>&#43;</button>
             </div>
             <div className="twelve columns expand " ref={(value)=>this.expand = value}>
