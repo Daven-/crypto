@@ -152,40 +152,41 @@ class App extends Component {
       // Only display the total coin value if "hold" values have been entered
       if (coinTotal > 0) {
         document.getElementById('coin-total').textContent = 'Total: ' + formatNumber(coinTotal);
+        document.title = formatNumber(coinTotal) + ' | Crypto';
       }
 
       return coins;
     }
   }
-    render() {
-      return (
-        <div className="container">
-          <div className="row">
-            <div className="nine columns">
-              <div id="coin-total"></div>
-            </div>
-            <div className="three columns expand-btn-container">
-              <button id="expand-btn" onClick={this.handleExpand}>&#43;</button>
-            </div>
-            <div className="twelve columns expand " ref={(value)=>this.expand = value}>
-              <form onSubmit={this.handleSubmit} >
-                  <label for="filter-coins">Comma sperated list of coin ids</label>
-                  <input id="filter-coins" type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="btc,eth,xrp" required/>
-                  <input className="button-primary" type="submit" value="filter" ref={(value) => this.filterSbmt = value} />
-              </form>
-              <form onSubmit={this.handleSubmitCoinAmount} >
-                  <label>Hold amount should be coin amounts not dollar amount you hold</label>
-                  <input type="text" name="coinId" value={this.state.coinId} onChange={this.handleInputChange} placeholder="Coin symbol e.g btc" required />
-                  <input type="text" name="coinAmount" value={this.state.coinAmount} onChange={this.handleInputChange} placeholder="Holding amount e.g 1000" required />
-                  <input className="button-primary" type="submit" value="Add" ref={(value) => this.amountSbmt = value} />
-              </form>
-            </div>
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="nine columns">
+            <div id="coin-total"></div>
           </div>
-          <img id="loading-gif" style={{display: 'block',margin: "0 auto"}} src="./loading.gif "></img>
-          {this.renderSpinners()}
+          <div className="three columns expand-btn-container">
+            <button id="expand-btn" onClick={this.handleExpand}>&#43;</button>
+          </div>
+          <div className="twelve columns expand " ref={(value)=>this.expand = value}>
+            <form onSubmit={this.handleSubmit} >
+                <label for="filter-coins">Comma sperated list of coin ids</label>
+                <input id="filter-coins" type="text" name="filteredCoins" value={this.state.filteredCoins} onChange={this.handleInputChange} placeholder="btc,eth,xrp" required/>
+                <input className="button-primary" type="submit" value="filter" ref={(value) => this.filterSbmt = value} />
+            </form>
+            <form onSubmit={this.handleSubmitCoinAmount} >
+                <label>Hold amount should be coin amounts not dollar amount you hold</label>
+                <input type="text" name="coinId" value={this.state.coinId} onChange={this.handleInputChange} placeholder="Coin symbol e.g btc" required />
+                <input type="text" name="coinAmount" value={this.state.coinAmount} onChange={this.handleInputChange} placeholder="Holding amount e.g 1000" required />
+                <input className="button-primary" type="submit" value="Add" ref={(value) => this.amountSbmt = value} />
+            </form>
+          </div>
         </div>
-      );
-    }
+        <img id="loading-gif" style={{display: 'block',margin: "0 auto"}} src="./loading.gif "></img>
+        {this.renderSpinners()}
+      </div>
+    );
   }
+}
 
-  export default App;
+export default App;
