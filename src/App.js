@@ -177,7 +177,7 @@ class App extends Component {
             <form onSubmit={this.handleSubmitCoinAmount} >
                 <label>Hold amount should be coin amounts not dollar amount you hold</label>
                 <input type="text" name="coinId" value={this.state.coinId} onChange={this.handleInputChange} placeholder="Coin symbol e.g btc" required />
-                <input type="number" name="coinAmount" value={this.state.coinAmount} onChange={this.handleInputChange} placeholder="Holding amount e.g 1000" required />
+                <input type="number" step="any" min="0" name="coinAmount" value={this.state.coinAmount} onChange={this.handleInputChange} placeholder="Holding amount e.g 1000" required />
                 <input className="button-primary" type="submit" value="Add" ref={(value) => this.amountSbmt = value} />
             </form>
           </div>
