@@ -1,7 +1,7 @@
 import React, {
   Component
 } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 
 import Cookies from 'js-cookie';
 import CoinContainer from './component/CoinContainer';
@@ -182,7 +182,7 @@ class App extends Component {
             </form>
           </div>
         </div>
-        <img id="loading-gif" style={{display: 'block',margin: "0 auto"}} src="./loading.gif "></img>
+        <img id="loading-gif" style={{display: 'block',margin: "0 auto"}} src="./loading.gif " alt="Loading..."></img>
         {this.renderSpinners()}
       </div>
     );
