@@ -3,10 +3,6 @@ import Cookies from 'js-cookie';
  * helper class
  */
 export default class Helper {
-  constructor() {
-
-  }
-
   /**
    * get color based on a number > 0, green > red
    * @param  {[type]} feed    [new feed]
@@ -32,7 +28,7 @@ export default class Helper {
     if (typeof filteredCoins === 'undefined' || filteredCoins.replace(' ', '') === "") {
       return coins.filter(function(coin) {
         for (var i = 0; i < 9; i++) {
-          if (coin.rank == i + 1) {
+          if (coin.rank * 1 === i + 1) {
             return 1;
           }
         }
